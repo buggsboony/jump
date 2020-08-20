@@ -1,3 +1,5 @@
 # jump directly to a folder
-# exemple (from ~/):
+# examples (from ~/):
 jump downloads
+jump parent/downloads
+jump *rent/downloads
