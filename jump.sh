@@ -15,7 +15,7 @@ NC='\033[0m' # No Color
 target=$(find $PWD -type d -iwholename "*/$1" | head -n 1)
  
 
-printf "Jumping to ${YELL}'${target}'${NC}\nn"
+printf "Jumping to ${YELL}'${target}'${NC}\n"
 
 cd $target
 
