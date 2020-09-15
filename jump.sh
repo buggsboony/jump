@@ -17,7 +17,7 @@ target=$(find $PWD -type d -iwholename "*/$1" | head -n 1)
 
 printf "Jumping to ${YELL}'${target}'${NC}\n"
 
-cd $target
+cd "$target"
 
 ##source ${BASH_SOURCE[0]}
 ##Ceci fonctionne
