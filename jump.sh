@@ -12,7 +12,12 @@ NC='\033[0m' # No Color
 ##version 1, iname :
 #target=$(find $PWD -type d -iname "$1" | head -n 1)
 ##version 2, iwholname :
-target=$(find $PWD -type d -iwholename "*/$1" | head -n 1)
+
+#target=$(find $PWD -type d -iwholename "*/$1" | head -n 1)  #ptet un probleme quand ya un dossier est symblink
+
+cd $PWD
+target=$(find . -type d -iwholename "*/$1" | head -n 1)
+
  
 
 printf "Jumping to ${YELL}'${target}'${NC}\n"
