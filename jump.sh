@@ -23,24 +23,53 @@ then
         printf "Cache directory ${LGREEN}'$cachedir'${NC} created.\n";
     fi
 fi
- 
+
+
+
+
 
  
+#######################################################   completion parameters #########################
+#enable autocompletion for jump parameter
+ _jump ()
+{   
+       #opts="help verbose version"
+       opts="$(ls $HOME/.cache/jumps)"
+     COMPREPLY=($(compgen -W "${opts}" \
+       -- "${COMP_WORDS[COMP_CWORD]}")) 
+   local IFS=$'\n'
+   local LASTCHAR=' ' 
+   if [ ${#COMPREPLY[@]} = 1 ]; then
+       [ -d "$COMPREPLY" ] && LASTCHAR=/
+       COMPREPLY=$(printf %q%s "$COMPREPLY" "$LASTCHAR")
+   else
+       for ((i=0; i < ${#COMPREPLY[@]}; i++)); do
+           [ -d "${COMPREPLY[$i]}" ] && COMPREPLY[$i]=${COMPREPLY[$i]}/
+       done
+   fi
+   return 0
+} 
+complete -o nospace -F _jump jump
+#######################################################   /completion parameters #########################
 
+
+arg="$1"
 if [ -z "$1" ]; then
   printf "${YELL}USAGE :${NC}\n";
   printf "jump folder_name\n";
   printf "jump --list\n";
   return;
 else    
-    #if [ "$arg" == "--list" ] || ["$arg" == "-l" ] || ["$arg" == "-list" ] then #Only --list works :(
-        if [ "$1" == "--list" ];then
+    if [[ "$arg" == "--list" || "$arg" == "-l" || "$arg" == "-list" ]]; 
+    then        
          printf "${YELL}Cache directory content :${NC}\n";
          ls -rt $cachedir    
          return;
-         #Terminates script without closing terminal #exit script without closing shell 
-        fi
+         #Terminates script without closing terminal #exit script without closing shell         
+    fi
 fi
+
+ 
 
 
 readcache()
@@ -65,7 +94,7 @@ readcache()
 
 writecache()
 {
-    if [ "$target" == "" ];then   
+    if [ ["$target" == "" ]];then   
         printf "";
     else
             jumpname="$1" 
@@ -102,7 +131,7 @@ writecache()
 target=$(readcache "$1")
 
 
-if [ "$target" == "" ];then   
+if [[ "$target" == "" ]];then   
     target=$(find . -type d -iwholename "*/$1" | head -n 1)        
     writecache "$1" "$target"
 fi
@@ -111,7 +140,6 @@ fi
 
 #Read cache
 #writecache "$1" "$target"
-
 
 
 if [ "$target" == "" ];then  
