@@ -23,6 +23,25 @@ then
         printf "Cache directory ${LGREEN}'$cachedir'${NC} created.\n";
     fi
 fi
+ 
+
+ 
+
+if [ -z "$1" ]; then
+  printf "${YELL}USAGE :${NC}\n";
+  printf "jump folder_name\n";
+  printf "jump --list\n";
+  return;
+else    
+    #if [ "$arg" == "--list" ] || ["$arg" == "-l" ] || ["$arg" == "-list" ] then #Only --list works :(
+        if [ "$1" == "--list" ];then
+         printf "${YELL}Cache directory content :${NC}\n";
+         ls -rt $cachedir    
+         return;
+         #Terminates script without closing terminal #exit script without closing shell 
+        fi
+fi
+
 
 readcache()
 {
