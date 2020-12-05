@@ -26,31 +26,11 @@ fi
 
 
 
+##### Nouvelles options  -d pour supprimer un fichier cache
 
 
- 
-#######################################################   completion parameters #########################
-#enable autocompletion for jump parameter
- _jump ()
-{   
-       #opts="help verbose version"
-       opts="$(ls $HOME/.cache/jumps)"
-     COMPREPLY=($(compgen -W "${opts}" \
-       -- "${COMP_WORDS[COMP_CWORD]}")) 
-   local IFS=$'\n'
-   local LASTCHAR=' ' 
-   if [ ${#COMPREPLY[@]} = 1 ]; then
-       [ -d "$COMPREPLY" ] && LASTCHAR=/
-       COMPREPLY=$(printf %q%s "$COMPREPLY" "$LASTCHAR")
-   else
-       for ((i=0; i < ${#COMPREPLY[@]}; i++)); do
-           [ -d "${COMPREPLY[$i]}" ] && COMPREPLY[$i]=${COMPREPLY[$i]}/
-       done
-   fi
-   return 0
-} 
-complete -o nospace -F _jump jump
-#######################################################   /completion parameters #########################
+
+
 
 
 arg="$1"
