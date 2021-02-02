@@ -59,10 +59,6 @@ else
     fi
 fi
 
- echo "debug"
- return
-
-
 readcache()
 {
      jumpname="$1"
