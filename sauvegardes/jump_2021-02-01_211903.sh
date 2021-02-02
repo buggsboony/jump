@@ -29,14 +29,17 @@ fi
 ##### Nouvelles options  -d pour supprimer un fichier cache
 
 
+
+
+
+
 arg="$1"
 if [ -z "$1" ]; then
   printf "${YELL}USAGE :${NC}\n";
   printf "jump folder_name\n";
   printf "jump --list\n";
   return;
-else 
-   
+else    
     if [[ "$arg" == "--list" || "$arg" == "-l" || "$arg" == "-list" ]]; 
     then        
          printf "${YELL}Cache directory content :${NC}\n";
@@ -44,23 +47,9 @@ else
          return;
          #Terminates script without closing terminal #exit script without closing shell         
     fi
-
-    if [[ "$arg" == "--remove" || "$arg" == "-r" || "$arg" == "-rm" ]]; 
-    then        
-        target="${@:2}"
-         printf "${MAG}Removing '$target' from cache directory :${NC}\n";
-         cached="$cachedir/$target"
-         echo "Content:"
-         cat "$cached"
-         echo "Action :"
-         rm -i "$cached"
-         return;
-         #Terminates script without closing terminal #exit script without closing shell         
-    fi
 fi
 
- echo "debug"
- return
+ 
 
 
 readcache()
