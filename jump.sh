@@ -11,7 +11,9 @@ LMAG='\033[1;35m'
 CYAN='\033[0;36m'
 LCYAN='\033[1;36m'
 NC='\033[0m' # No Color
- 
+
+mustexit=0
+
 cachedir=$HOME/.cache/jumps
 if [ ! -d $cachedir ];
 then
@@ -98,8 +100,21 @@ writecache()
                     echo "jump to content";
                 else
                     # Create content
-                    echo "$path">"$cachefile";
-                    printf "Cache file ${LGREEN}'$jumpname'${NC} created.\n";  
+                    #ask before continue (save and actually jump)
+                    printf "Attempt to create cache file ${MAG}'$jumpname'${NC} \n";                      
+                    read -r -p "Continue ? " response
+                    case "$response" in
+                            [yY][eE][sS]|[yY]|[oO] )
+                       
+                         echo "$path">"$cachefile";                                        
+                         printf "Cache file ${LGREEN}'$jumpname'${NC} created.\n";  
+                        ;;
+                        *)        
+                        mustexit=1   
+                        printf "Cache file ${WHITE}'$jumpname'${NC} not saved.\n";  
+                    
+                        ;;
+                    esac                  
                 fi     
             fi
      fi
@@ -119,8 +134,15 @@ target=$(readcache "$1")
 
 
 if [[ "$target" == "" ]];then   
-    target=$(find . -type d -iwholename "*/$1" | head -n 1)        
+    target=$(find . -type d -iwholename "*/$1" | head -n 1)     
+        
     writecache "$1" "$target"
+
+    if [[ "$mustexit" == "1" ]];then
+       printf "${WHITE}OK, goodbye...${NC}\n"
+        return;    
+    fi
+
 fi
 
 #
