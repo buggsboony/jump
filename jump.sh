@@ -82,8 +82,8 @@ readcache()
 }
 
 writecache()
-{
-    if [ ["$target" == "" ]];then   
+{    
+    if [[ "$target" == "" ]] ;then   
         printf "";
     else
             jumpname="$1" 
@@ -92,8 +92,8 @@ writecache()
             # echo PATH $path;
             # echo CURRENT $PWD;
             if [ "$path" == "" ]; then
-                printf "will not create an empty file";#Not found
-            else            
+                printf "will not create an empty file"; #Not found
+            else                                 
                 cachefile="$cachedir/$jumpname"
                 if [ -f "$cachefile" ]; then
                     #jump to content             
@@ -101,8 +101,9 @@ writecache()
                 else
                     # Create content
                     #ask before continue (save and actually jump)
-                    printf "Attempt to create cache file ${MAG}'$jumpname'${NC} \n";                      
+                    printf "Attempting to create cache file ${YELL}'$jumpname'${NC} path : \n ${WHITE}'$path'${NC} \n";                      
                     read -r -p "Continue ? " response
+              
                     case "$response" in
                             [yY][eE][sS]|[yY]|[oO] )
                        
