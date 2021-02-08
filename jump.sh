@@ -32,10 +32,14 @@ fi
 
 
 arg="$1"
+dep="20"
+folder="$1" #default case
+
 if [ -z "$1" ]; then
   printf "${YELL}USAGE :${NC}\n";
   printf "jump folder_name\n";
   printf "jump --list\n";
+  printf "jump --depth 1 folder\n";
   return;
 else 
    
@@ -45,6 +49,12 @@ else
          ls -rt $cachedir    
          return;
          #Terminates script without closing terminal #exit script without closing shell         
+    fi
+
+    if [[ "$arg" == "--depth" || "$arg" == "-d" || "$arg" == "-depth" || "$arg" == "-maxdepth" ]]; 
+    then        
+         dep="$2"
+         folder="$3"
     fi
 
     if [[ "$arg" == "--remove" || "$arg" == "-r" || "$arg" == "-rm" ]]; 
@@ -112,6 +122,7 @@ writecache()
                         ;;
                         *)        
                         mustexit=1   
+                         printf "You can specify maxdepth jump with the --depth parameter.\n";  
                         printf "Cache file ${WHITE}'$jumpname'${NC} not saved.\n";  
                     
                         ;;
@@ -134,8 +145,9 @@ writecache()
 target=$(readcache "$1")
 
 
+
 if [[ "$target" == "" ]];then   
-    target=$(find . -type d -iwholename "*/$1" | head -n 1)     
+    target=$(find . -maxdepth $dep -type d -iwholename "*/$folder" | head -n 1)     
         
     writecache "$1" "$target"
 
