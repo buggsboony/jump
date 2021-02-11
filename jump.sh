@@ -54,7 +54,7 @@ else
     if [[ "$arg" == "--depth" || "$arg" == "-d" || "$arg" == "-depth" || "$arg" == "-maxdepth" ]]; 
     then        
          dep="$2"
-         folder="$3"
+         folder="$3"           
     fi
 
     if [[ "$arg" == "--remove" || "$arg" == "-r" || "$arg" == "-rm" ]]; 
@@ -145,11 +145,10 @@ writecache()
 target=$(readcache "$1")
 
 
-
 if [[ "$target" == "" ]];then   
     target=$(find . -maxdepth $dep -type d -iwholename "*/$folder" | head -n 1)     
-        
-    writecache "$1" "$target"
+         
+    writecache "$folder" "$target"
 
     if [[ "$mustexit" == "1" ]];then
        printf "${WHITE}OK, goodbye...${NC}\n"
